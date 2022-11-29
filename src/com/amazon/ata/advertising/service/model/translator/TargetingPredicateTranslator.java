@@ -3,13 +3,7 @@ package com.amazon.ata.advertising.service.model.translator;
 import com.amazon.ata.advertising.service.exceptions.AdvertisementClientException;
 import com.amazon.ata.advertising.service.model.TargetingPredicateType;
 import com.amazon.ata.advertising.service.targeting.Comparison;
-import com.amazon.ata.advertising.service.targeting.predicate.AgeTargetingPredicate;
-import com.amazon.ata.advertising.service.targeting.predicate.CategorySpendFrequencyTargetingPredicate;
-import com.amazon.ata.advertising.service.targeting.predicate.CategorySpendValueTargetingPredicate;
-import com.amazon.ata.advertising.service.targeting.predicate.ParentPredicate;
-import com.amazon.ata.advertising.service.targeting.predicate.PrimeBenefitTargetingPredicate;
-import com.amazon.ata.advertising.service.targeting.predicate.RecognizedTargetingPredicate;
-import com.amazon.ata.advertising.service.targeting.predicate.TargetingPredicate;
+import com.amazon.ata.advertising.service.targeting.predicate.*;
 import com.amazon.ata.customerservice.AgeRange;
 import com.amazon.ata.customerservice.Category;
 import com.amazon.ata.primeclubservice.Benefit;
@@ -58,6 +52,9 @@ public class TargetingPredicateTranslator {
                 break;
             case RECOGNIZED:
                 targetingPredicate = toRecognizedTargetingPredicate(predicate);
+                break;
+            case UNKNOWN:
+                targetingPredicate = toUnknownPredicate(predicate);
                 break;
             default:
                 throw new AdvertisementClientException(String.format("An unknown predicate type was requested, %s. " +
@@ -123,6 +120,13 @@ public class TargetingPredicateTranslator {
             com.amazon.ata.advertising.service.model.TargetingPredicate predicate
     ) {
         return new RecognizedTargetingPredicate(predicate.isNegate());
+    }
+    
+    private static UnknownPredicate toUnknownPredicate(
+            com.amazon.ata.advertising.service.model.TargetingPredicate predicate
+    ) {
+        //MARKER: UNKNOWN
+        return new UnknownPredicate(predicate.isNegate());
     }
 
     private static String toCategory(Map<String, String> attributes, String predicateName) {

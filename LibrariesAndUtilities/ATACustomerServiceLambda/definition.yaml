@@ -20,7 +20,7 @@ stack:
           buildTarget: release
       environment:
         variables:
-          AWS_REGION: us-west-2
+          AWS_REGION: us-east-1
           #BEER_TABLE_NAME: 'REPLACE_WITH_ACTUAL_DDB_TABLE_NAME'
       mountPoints:
       - sourceURI: mounts/events/create_beer.json

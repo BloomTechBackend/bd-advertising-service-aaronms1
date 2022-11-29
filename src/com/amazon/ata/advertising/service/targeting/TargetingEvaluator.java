@@ -1,8 +1,10 @@
 package com.amazon.ata.advertising.service.targeting;
 
+import com.amazon.ata.advertising.service.activity.AddTargetingGroupActivity;
 import com.amazon.ata.advertising.service.model.RequestContext;
 import com.amazon.ata.advertising.service.targeting.predicate.TargetingPredicate;
 import com.amazon.ata.advertising.service.targeting.predicate.TargetingPredicateResult;
+import com.amazonaws.services.dynamodbv2.model.Update;
 
 import java.util.List;
 
@@ -10,16 +12,16 @@ import java.util.List;
  * Evaluates TargetingPredicates for a given RequestContext.
  */
 public class TargetingEvaluator {
-    public static final boolean IMPLEMENTED_STREAMS = false;
-    public static final boolean IMPLEMENTED_CONCURRENCY = false;
-    private final RequestContext requestContext;
+    public static final boolean IMPLEMENTED_STREAMS = true;
+    public static final boolean        IMPLEMENTED_CONCURRENCY = true;
+    private static      RequestContext requestContext          = null;
 
     /**
      * Creates an evaluator for targeting predicates.
      * @param requestContext Context that can be used to evaluate the predicates.
      */
     public TargetingEvaluator(RequestContext requestContext) {
-        this.requestContext = requestContext;
+        TargetingEvaluator.requestContext = requestContext;
     }
 
     /**
@@ -28,17 +30,23 @@ public class TargetingEvaluator {
      * @param targetingGroup Targeting group for an advertisement, including TargetingPredicates.
      * @return TRUE if all of the TargetingPredicates evaluate to TRUE against the RequestContext, FALSE otherwise.
      */
-    public TargetingPredicateResult evaluate(TargetingGroup targetingGroup) {
+    public static TargetingPredicateResult evaluate(TargetingGroup targetingGroup) {
         List<TargetingPredicate> targetingPredicates = targetingGroup.getTargetingPredicates();
         boolean allTruePredicates = true;
-        for (TargetingPredicate predicate : targetingPredicates) {
-            TargetingPredicateResult predicateResult = predicate.evaluate(requestContext);
-            if (!predicateResult.isTrue()) {
-                allTruePredicates = false;
-                break;
-            }
+//        for (TargetingPredicate predicate : targetingPredicates) {
+//            TargetingPredicateResult predicateResult = predicate.evaluate(requestContext);
+//            if (!predicateResult.isTrue()) {
+//                allTruePredicates = false;
+//                break;
+//            }
+//        }
+        //TODO: Update TargetingEvaluator's evaluate method to use a stream instead of a for loop to evaluate the TargetingPredicateResult.
+        if (IMPLEMENTED_STREAMS) {
+            allTruePredicates = targetingPredicates.stream()
+                    .map(predicate -> predicate.evaluate(requestContext))
+                    .allMatch(TargetingPredicateResult::isTrue);
         }
-
+        
         return allTruePredicates ? TargetingPredicateResult.TRUE :
                                    TargetingPredicateResult.FALSE;
     }

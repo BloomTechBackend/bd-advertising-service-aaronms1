@@ -23,7 +23,7 @@ public class DynamoDBModule {
     public DynamoDBMapper provideDynamoDBMapper() {
         AmazonDynamoDB amazonDynamoDBClient = AmazonDynamoDBClientBuilder.standard()
                 .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
-                .withRegion(Regions.US_WEST_2)
+                .withRegion(Regions.US_EAST_1)
                 .build();
 
         return new DynamoDBMapper(amazonDynamoDBClient);

@@ -3,7 +3,7 @@ package com.amazon.ata.customerservice;
 import java.util.Arrays;
 
 public class CustomerProfile implements Comparable<CustomerProfile> {
-
+   //MARKER: modified for UNKNOWN
   /**
    * Statically creates a builder instance for CustomerProfile.
    */
@@ -54,6 +54,19 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
       this.parent = parent;
       return this;
     }
+    
+    protected Boolean unknown;
+    /**
+     * Sets the value of the field "unknown" to be used for the constructed object.
+     * @param unknown  The value of the "unknown" field.
+     *   The value of the "unknown" field.
+     * @return
+     *   This builder.
+     */
+    public Builder withUnknown(Boolean unknown) {
+      this.unknown = unknown;
+      return this;
+    }
 
     /**
      * Sets the fields of the given instances to the corresponding values recorded when calling the "with*" methods.
@@ -64,6 +77,7 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
       instance.setHomeState(this.homeState);
       instance.setAgeRange(this.ageRange);
       instance.setParent(this.parent);
+      instance.setUnknown(this.unknown);
     }
 
     /**
@@ -84,6 +98,7 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
   private String homeState;
   private String ageRange;
   private Boolean parent;
+  private Boolean unknown;
 
 //@EnumValues(value={"AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"})
   public String getHomeState() {
@@ -110,6 +125,14 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
   public void setParent(Boolean parent) {
     this.parent = parent;
   }
+  
+    public Boolean isUnknown() {
+        return this.unknown;
+    }
+    
+    public void setUnknown(Boolean unknown) {
+        this.unknown = unknown;
+    }
 
   private static final int classNameHashCode =
       internalHashCodeCompute("com.amazon.ata.customerservice.CustomerProfile");
@@ -124,7 +147,8 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
         classNameHashCode,
         getHomeState(),
         getAgeRange(),
-        isParent());
+        isParent(),
+        isUnknown());
   }
 
   private static int internalHashCodeCompute(Object... objects) {
@@ -145,7 +169,8 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
     return
         internalEqualityCheck(getHomeState(), that.getHomeState())
         && internalEqualityCheck(getAgeRange(), that.getAgeRange())
-        && internalEqualityCheck(isParent(), that.isParent());
+        && internalEqualityCheck(isParent(), that.isParent())
+        && internalEqualityCheck(isUnknown(), that.isUnknown());
   }
 
   private static boolean internalEqualityCheck(Object a, Object b) {
@@ -209,6 +234,28 @@ public class CustomerProfile implements Comparable<CustomerProfile> {
     {
       Object o1 = isParent();
       Object o2 = t.isParent();
+      if(o1 != o2) {
+        if(o1 == null)
+          return -1;
+        if(o2 == null)
+          return 1;
+        if(o1 instanceof Comparable<?>) {
+          Comparable c1 = (Comparable)o1;
+          int ret = c1.compareTo(o2);
+          if(ret != 0)
+            return ret;
+        }
+        else if(!o1.equals(o2)) {
+          int hc1 = o1.hashCode();
+          int hc2 = o2.hashCode();
+          if(hc1 < hc2) return -1;
+          if(hc1 > hc2) return 1;
+        }
+      }
+    }
+    {
+      Object o1 = isUnknown();
+      Object o2 = t.isUnknown();
       if(o1 != o2) {
         if(o1 == null)
           return -1;

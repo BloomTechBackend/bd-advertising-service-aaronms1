@@ -1,9 +1,8 @@
 package com.amazon.ata.advertising.service.businesslogic;
 
 import com.amazon.ata.advertising.service.dao.ReadableDao;
-import com.amazon.ata.advertising.service.model.AdvertisementContent;
-import com.amazon.ata.advertising.service.model.EmptyGeneratedAdvertisement;
-import com.amazon.ata.advertising.service.model.GeneratedAdvertisement;
+import com.amazon.ata.advertising.service.model.*;
+import com.amazon.ata.advertising.service.targeting.TargetingEvaluator;
 import com.amazon.ata.advertising.service.targeting.TargetingGroup;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -13,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import javax.inject.Inject;
+
+import static com.amazon.ata.advertising.service.targeting.TargetingEvaluator.IMPLEMENTED_CONCURRENCY;
 
 /**
  * This class is responsible for picking the advertisement to be rendered.
@@ -65,10 +66,10 @@ public class AdvertisementSelectionLogic {
             if (CollectionUtils.isNotEmpty(contents)) {
                 AdvertisementContent randomAdvertisementContent = contents.get(random.nextInt(contents.size()));
                 generatedAdvertisement = new GeneratedAdvertisement(randomAdvertisementContent);
+            } else if (customerId == null) {
+                return new EmptyGeneratedAdvertisement();
             }
-
         }
-
         return generatedAdvertisement;
     }
 }

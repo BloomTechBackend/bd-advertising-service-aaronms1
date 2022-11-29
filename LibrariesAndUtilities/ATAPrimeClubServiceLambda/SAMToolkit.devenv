@@ -20,7 +20,7 @@ SAM_IDENTITY_BROKER_POSIX_GROUP_NAME="ata-v1-instructors"
 
 
 # This is where we want our dev stacks to be deployed
-SAM_REGION=${SAM_REGION:-"us-west-2"}
+SAM_REGION=${SAM_REGION:-"us-east-1"}
 SAM_STACK=${SAM_STACK:-"sam-dev-${USER}-$(basename $(pwd))"}
 
 # The S3 bucket used to store code archives (auto-created).

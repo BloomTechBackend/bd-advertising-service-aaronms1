@@ -6,5 +6,7 @@ public enum TargetingPredicateType {
     CATEGORY_SPEND_VALUE,
     PARENT,
     PRIME_BENEFIT,
-    RECOGNIZED
+    RECOGNIZED,
+    UNKNOWN,
+    //MARKER: UNKNOWN
 }
