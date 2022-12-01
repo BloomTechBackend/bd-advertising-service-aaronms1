@@ -7,7 +7,7 @@
     "parameters": {
       "awsAccountId": "012345678910",
       "domain": "beta",
-      "realm": "us-west-2",
+      "realm": "us-east-1",
       "endpointOverride": "http://com.amazon.atacustomerservicelambda"
     },
     "tests": [

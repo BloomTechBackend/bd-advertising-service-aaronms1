@@ -20,7 +20,7 @@ stack:
           buildTarget: release
       environment:
         variables:
-          AWS_REGION: us-west-2
+          AWS_REGION: us-east-1
       mountPoints:
       - sourceURI: mounts/events/get_benefits_hash0.json
         destinationURI: /tmp/events/get_benefits_hash0.json

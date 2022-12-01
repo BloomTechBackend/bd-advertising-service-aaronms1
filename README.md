@@ -27,7 +27,7 @@ You're done with the project when:
 You'll want to run the following commands to setup your DynamoDB tables for this project (note that you will need to wait for the first command's stack to finish building before running the next commands):
 
 ```
-aws cloudformation create-stack --region us-west-2 --stack-name advertisingservice-createtables --template-body file://configurations/cloudFormation/ddb_tables.template.yml --capabilities CAPABILITY_IAM
+aws cloudformation create-stack --region us-east-1 --stack-name advertisingservice-createtables --template-body file://configurations/cloudFormation/ddb_tables.template.yml --capabilities CAPABILITY_IAM
 aws dynamodb batch-write-item --request-items file://configurations/cloudFormation/content_table.json
 aws dynamodb batch-write-item --request-items file://configurations/cloudFormation/targeting_group_table.json
 aws dynamodb batch-write-item --request-items file://configurations/cloudFormation/targeting_group_table2.json
