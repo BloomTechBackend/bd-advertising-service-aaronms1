@@ -11,12 +11,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A targeting group for an advertisement, required to show if this advertisement should be rendered.
  */
 @DynamoDBTable(tableName = "TargetingGroups")
-public class TargetingGroup {
+public class TargetingGroup implements Runnable{
+    //MARKER: MT2 made this class runnable
     public static final String CONTENT_ID_INDEX = "ContentIdIndex";
 
     @DynamoDBHashKey(attributeName = "TargetingGroupId")
@@ -85,5 +88,26 @@ public class TargetingGroup {
 
     public void setTargetingPredicates(List<TargetingPredicate> targetingPredicates) {
         this.targetingPredicates = targetingPredicates;
+    }
+    
+    /**
+     * Author: ax56 "<a href="https://github.com/aaronms1">...</a>"
+     *
+     * When an object implementing interface {@code Runnable} is used to create
+     * a thread, starting the thread causes the object's {@code run} method to
+     * be called in that separately executing thread.
+     * <p>
+     * The general contract of the method {@code run} is that it may take any
+     * action whatsoever.
+     * @see Thread#run()
+     */
+    @Override
+    public void run() {
+        //MARKER: MT2
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (TargetingPredicate targetingPredicate : targetingPredicates) {
+            executorService.execute((Runnable) targetingPredicate);
+        }
+        executorService.shutdown();
     }
 }
